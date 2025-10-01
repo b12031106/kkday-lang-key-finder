@@ -1,4 +1,4 @@
-# lang-key-finder Development Guidelines
+# kkday-lang-key-finder Development Guidelines
 
 Last updated: 2025-10-01
 

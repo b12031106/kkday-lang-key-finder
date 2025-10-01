@@ -4,8 +4,8 @@
 
 ### 1. 下載專案
 ```bash
-git clone https://github.com/yourusername/lang-key-finder.git
-cd lang-key-finder
+git clone https://github.com/b12031106/kkday-lang-key-finder.git
+cd kkday-lang-key-finder
 ```
 
 ### 2. 安裝依賴套件
@@ -24,7 +24,7 @@ npm test
 2. 在網址列輸入：`chrome://extensions/`
 3. 開啟右上角的「開發人員模式」
 4. 點選「載入未封裝項目」
-5. 選擇專案資料夾 `lang-key-finder`
+5. 選擇專案資料夾 `kkday-lang-key-finder`
 6. 確認擴充功能已啟用
 
 ## ✅ 驗證安裝
@@ -167,7 +167,7 @@ lang-key-finder/
 
 如果遇到任何問題，請：
 1. 查看[疑難排解](#疑難排解)章節
-2. 檢查 [GitHub Issues](https://github.com/yourusername/lang-key-finder/issues)
+2. 檢查 [GitHub Issues](https://github.com/b12031106/kkday-lang-key-finder/issues)
 3. 建立新的 Issue 回報問題
 
 ---

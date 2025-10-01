@@ -1,5 +1,5 @@
 {
-  "name": "lang-key-finder",
+  "name": "kkday-lang-key-finder",
   "version": "1.0.0",
   "description": "Chrome extension for finding i18n translation keys on KKday websites",
   "scripts": {
