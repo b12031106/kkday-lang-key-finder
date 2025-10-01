@@ -1,0 +1,16 @@
+{
+  "extends": "./.eslintrc.json",
+  "env": {
+    "jest": true,
+    "node": true
+  },
+  "globals": {
+    "global": "readonly",
+    "__dirname": "readonly",
+    "module": "readonly"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+  }
+}

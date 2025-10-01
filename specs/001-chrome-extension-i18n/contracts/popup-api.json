@@ -1,0 +1,134 @@
+{
+  "title": "Popup API Contract",
+  "description": "API contract for popup interface functionality",
+  "version": "1.0.0",
+  "methods": {
+    "searchTranslations": {
+      "description": "Search translations using fuzzy matching",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query text",
+            "minLength": 1
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "threshold": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "default": 0.3,
+                "description": "Fuzzy search threshold"
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10,
+                "description": "Maximum number of results"
+              }
+            }
+          }
+        },
+        "required": ["query"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether search succeeded"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "description": "Translation key"
+                    },
+                    "val": {
+                      "type": "string",
+                      "description": "Translation value"
+                    }
+                  },
+                  "required": ["key", "val"]
+                },
+                "score": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "Match relevance score"
+                }
+              },
+              "required": ["item", "score"]
+            },
+            "description": "Array of search results"
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message if search failed"
+          }
+        },
+        "required": ["success"]
+      }
+    },
+    "copyToClipboard": {
+      "description": "Copy translation key to clipboard",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Translation key to copy",
+            "minLength": 1
+          }
+        },
+        "required": ["key"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether copy operation succeeded"
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message if copy failed"
+          }
+        },
+        "required": ["success"]
+      }
+    },
+    "getExtensionState": {
+      "description": "Get current extension state",
+      "parameters": {},
+      "returns": {
+        "type": "object",
+        "properties": {
+          "isActive": {
+            "type": "boolean",
+            "description": "Whether extension is active"
+          },
+          "hasData": {
+            "type": "boolean",
+            "description": "Whether translation data is available"
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Current error message if any"
+          }
+        },
+        "required": ["isActive", "hasData"]
+      }
+    }
+  }
+}

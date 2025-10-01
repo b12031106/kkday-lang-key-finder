@@ -1,0 +1,95 @@
+{
+  "title": "Content Script API Contract",
+  "description": "API contract for content script functionality",
+  "version": "1.0.0",
+  "methods": {
+    "extractTranslationData": {
+      "description": "Extract translation data from page global variables",
+      "parameters": {},
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether data extraction succeeded"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "Translation key identifier"
+                },
+                "val": {
+                  "type": "string",
+                  "description": "Translation value text"
+                }
+              },
+              "required": ["key", "val"]
+            },
+            "description": "Array of translation entries"
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message if extraction failed"
+          }
+        },
+        "required": ["success"]
+      }
+    },
+    "getPageContext": {
+      "description": "Get current page context information",
+      "parameters": {},
+      "returns": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Current page domain"
+          },
+          "pathname": {
+            "type": "string",
+            "description": "Current page path"
+          },
+          "isKKdayDomain": {
+            "type": "boolean",
+            "description": "Whether domain matches *.kkday.com"
+          },
+          "isProductPage": {
+            "type": "boolean",
+            "description": "Whether URL matches product page pattern"
+          },
+          "language": {
+            "type": "string",
+            "description": "Detected language code"
+          }
+        },
+        "required": ["domain", "pathname", "isKKdayDomain", "isProductPage", "language"]
+      }
+    },
+    "selectPageElement": {
+      "description": "Enable element selection mode and get clicked element text",
+      "parameters": {},
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether element selection succeeded"
+          },
+          "text": {
+            "type": "string",
+            "description": "Text content of selected element"
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message if selection failed"
+          }
+        },
+        "required": ["success"]
+      }
+    }
+  }
+}

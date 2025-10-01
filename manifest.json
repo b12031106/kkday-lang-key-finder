@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "I18n Key Finder",
+  "version": "1.0.0",
+  "description": "Find i18n translation keys for text on KKday websites with fuzzy search and element picker",
+  "author": "KKday Development Team",
+  "homepage_url": "https://github.com/kkday/i18n-key-finder",
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "storage",
+    "notifications",
+    "tabs",
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.kkday.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.kkday.com/*"],
+      "js": ["src/content/content-script-browser.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker-browser.js"
+  },
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "I18n Key Finder",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*.png", "src/content/page-script.js"],
+      "matches": ["*://*.kkday.com/*"]
+    }
+  ]
+}
