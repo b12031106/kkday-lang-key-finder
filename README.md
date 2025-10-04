@@ -18,17 +18,20 @@ A Chrome extension designed to help developers find i18n translation keys on KKd
 ### From Source
 
 1. Clone this repository:
+
 ```bash
-git clone https://github.com/kkday/i18n-key-finder.git
-cd i18n-key-finder
+git clone https://github.com/b12031106/kkday-lang-key-finder.git
+cd kkday-lang-key-finder
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Run tests:
+
 ```bash
 npm test
 ```
@@ -62,6 +65,7 @@ npm test
 ### Understanding Accuracy Scores
 
 Results show accuracy scores to help you find the best match:
+
 - **90-100% (Green)**: Exact or near-exact match
 - **70-89% (Orange)**: Good partial match
 - **Below 70% (Blue)**: Loose match, may need verification
@@ -135,6 +139,7 @@ flowchart TB
 ### Component Details
 
 #### 1. **Popup UI** (`popup.js`)
+
 - Provides the modern, responsive user interface
 - Handles search input with debouncing for performance
 - Displays results with color-coded accuracy badges
@@ -143,6 +148,7 @@ flowchart TB
 - Shows loading states and error handling
 
 #### 2. **Content Script** (`content-script-browser.js`)
+
 - Runs in isolated context within web pages
 - Injects page script to access page context variables
 - Implements interactive element picker with:
@@ -155,6 +161,7 @@ flowchart TB
 - Calculates match accuracy scores (exact: 100%, partial: 40-80%)
 
 #### 3. **Page Script** (`page-script.js`)
+
 - Injected directly into page context (bypasses isolation)
 - Accesses global variables: `__NUXT__`, `__NEXT_DATA__`, `__INIT_STATE__`
 - Implements deep data sanitization to handle:
@@ -165,6 +172,7 @@ flowchart TB
 - Retries extraction after delay for dynamic content
 
 #### 4. **Service Worker** (`service-worker-browser.js`)
+
 - Background script managing extension lifecycle
 - Handles installation and updates
 - Manages persistent state across sessions
@@ -211,7 +219,7 @@ flowchart TB
 ### Project Structure
 
 ```
-i18n-key-finder/
+kkday-lang-key-finder/
 ├── src/
 │   ├── popup/           # Popup UI components
 │   ├── content/          # Content and page scripts

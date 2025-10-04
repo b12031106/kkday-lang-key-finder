@@ -1,6 +1,12 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+---
+
 # kkday-lang-key-finder Development Guidelines
 
-Last updated: 2025-10-01
+Last updated: 2025-10-04
 
 ## Project Overview
 
@@ -9,8 +15,9 @@ Chrome extension for finding i18n translation keys on KKday websites. Extracts t
 ## Active Technologies
 - JavaScript ES2022, HTML5, CSS3 (Chrome Extension Manifest V3)
 - Chrome Extension APIs (tabs, scripting, storage, clipboardWrite, contextMenus)
-- Inline fuzzy search algorithm (no external dependencies)
+- Fuse.js for fuzzy search (installed but inline algorithm preferred for production)
 - CSS Grid Layout for modern UI
+- Jest for testing, ESLint/Prettier for code quality
 
 ## Project Structure
 ```
@@ -38,11 +45,33 @@ manifest.json               # Chrome extension manifest V3
 ```
 
 ## Commands
+
+### Development
 ```bash
-npm test              # Run all tests
+npm run dev           # Fix lint issues and format code
+npm run build         # Run lint and all tests
+```
+
+### Testing
+```bash
+npm test              # Run all tests with Jest
+npm run test:watch    # Run tests in watch mode
+npm run test:coverage # Generate coverage report
+npm test tests/browser/test_browser_compatibility.js  # Run specific test file
+```
+
+### Code Quality
+```bash
 npm run lint          # ESLint check
 npm run lint:fix      # Auto-fix lint issues
+npm run format        # Format code with Prettier
 ```
+
+### Loading Extension
+1. Navigate to `chrome://extensions/`
+2. Enable "Developer mode"
+3. Click "Load unpacked"
+4. Select project directory
 
 ## Code Style
 

@@ -3,15 +3,18 @@
 ## 擴充功能資訊
 
 ### 基本資訊
-- **名稱**: I18n Key Finder
+
+- **名稱**: KKday Lang Key Finder
 - **版本**: 1.0.0
 - **分類**: 開發者工具 (Developer Tools)
 - **目標用戶**: KKday 開發團隊和相關人員
 
 ### 描述
+
 **簡短描述**: Find i18n translation keys for text on KKday websites with fuzzy search and element picker
 
 **詳細描述**:
+
 ```
 I18n Key Finder 是專為 KKday 開發團隊設計的 Chrome 擴充功能，用於快速查找網頁文字對應的國際化翻譯鍵值。
 
@@ -39,12 +42,14 @@ I18n Key Finder 是專為 KKday 開發團隊設計的 Chrome 擴充功能，用�
 ## 視覺資源
 
 ### 圖示
+
 - ✅ icon16.png (16x16) - 工具列圖示
 - ✅ icon32.png (32x32) - 標準圖示
 - ✅ icon48.png (48x48) - 管理頁面圖示
 - ✅ icon128.png (128x128) - Chrome Web Store 圖示
 
 ### 螢幕截圖 (需要製作)
+
 1. **主介面截圖** (1280x800)
    - 展示搜尋介面和結果列表
    - 標註主要功能區域
@@ -61,18 +66,19 @@ I18n Key Finder 是專為 KKday 開發團隊設計的 Chrome 擴充功能，用�
    - 展示擴充功能的設定選項
 
 ### 宣傳影片 (選用)
+
 - 長度: 30-60 秒
 - 內容: 快速展示主要功能的使用流程
 - 格式: MP4, WebM
 
 ## 隱私政策
 
-由於此擴充功能僅在特定域名 (*.kkday.com) 下運作且不收集個人資料，隱私政策相對簡單：
+由於此擴充功能僅在特定域名 (\*.kkday.com) 下運作且不收集個人資料，隱私政策相對簡單：
 
 ```
 隱私政策
 
-I18n Key Finder 擴充功能隱私政策
+KKday Lang Key Finder 擴充功能隱私政策
 
 資料收集：
 • 我們不收集任何個人識別資訊
@@ -89,12 +95,13 @@ I18n Key Finder 擴充功能隱私政策
 • 只讀取頁面中的翻譯資料結構
 • 不存取其他網站或個人檔案
 
-最後更新：2024年9月
+最後更新：2025年9月
 ```
 
 ## 發布檢查清單
 
 ### 開發完成
+
 - [x] 核心功能實作完成
 - [x] 訊息傳遞系統正常運作
 - [x] 元素選取器功能完善
@@ -105,6 +112,7 @@ I18n Key Finder 擴充功能隱私政策
 - [ ] 跨瀏覽器測試
 
 ### 發布準備
+
 - [x] manifest.json 完整且正確
 - [x] 所有圖示檔案準備就緒
 - [ ] 螢幕截圖製作完成
@@ -113,12 +121,14 @@ I18n Key Finder 擴充功能隱私政策
 - [ ] 支援頁面建立
 
 ### 測試驗證
+
 - [ ] 在不同的 KKday 頁面測試
 - [ ] 驗證權限請求合理性
 - [ ] 測試安裝和卸載流程
 - [ ] 驗證所有功能正常運作
 
 ### Chrome Web Store 送審
+
 - [ ] 開發者帳號準備
 - [ ] 付費註冊費用 ($5 USD)
 - [ ] 上傳擴充功能套件
@@ -128,36 +138,26 @@ I18n Key Finder 擴充功能隱私政策
 ## 版本發布策略
 
 ### 1.0.0 - 初始版本
+
 - 基本的文字搜尋功能
 - 元素選取器
 - 複製到剪貼簿
 - KKday 域名限制
 
-### 1.1.0 - 功能增強 (未來)
-- 搜尋歷史記錄
-- 多語言介面支援
-- 更多的資料來源支援
-- 效能優化
-
-### 1.2.0 - 進階功能 (未來)
-- 翻譯鍵值管理
-- 批次操作功能
-- 整合開發工具
-- API 介接功能
-
 ## 支援和維護
 
 ### 回報問題
-- GitHub Issues: https://github.com/kkday/i18n-key-finder/issues
-- 內部 Slack 頻道: #i18n-tools
-- 電子郵件: dev-tools@kkday.com
+
+- GitHub Issues: https://github.com/b12031106/kkday-lang-key-finder/issues
 
 ### 更新頻率
+
 - 安全性修補：即時發布
 - 功能更新：每月評估
 - 大版本更新：每季評估
 
 ### 相容性
+
 - Chrome 版本: 88+ (Manifest V3 支援)
 - Edge 版本: 88+
 - 其他 Chromium 瀏覽器: 視 Manifest V3 支援狀況

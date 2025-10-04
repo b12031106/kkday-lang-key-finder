@@ -7,6 +7,9 @@
 const PageContextService = require('../services/PageContextService');
 const DataExtractionService = require('../services/DataExtractionService');
 
+// Constants
+const OVERLAY_ID = 'kkday-lang-key-finder-overlay';
+
 class ContentScript {
   constructor() {
     this.isElementPickerActive = false;
@@ -34,9 +37,11 @@ class ContentScript {
         isKKdayDomain: this.pageContext.isKKdayDomain,
         isProductPage: this.pageContext.isProductPage
       });
-
     } catch (error) {
-      console.error('[I18n Key Finder] Content script initialization failed:', error);
+      console.error(
+        '[I18n Key Finder] Content script initialization failed:',
+        error
+      );
     }
   }
 
@@ -56,36 +61,36 @@ class ContentScript {
   async handleMessage(request, sender, sendResponse) {
     try {
       switch (request.action) {
-      case 'extractTranslationData':
-        const extractResult = await this.extractTranslationData();
-        sendResponse(extractResult);
-        break;
+        case 'extractTranslationData':
+          const extractResult = await this.extractTranslationData();
+          sendResponse(extractResult);
+          break;
 
-      case 'getPageContext':
-        const contextResult = await this.getPageContext();
-        sendResponse(contextResult);
-        break;
+        case 'getPageContext':
+          const contextResult = await this.getPageContext();
+          sendResponse(contextResult);
+          break;
 
-      case 'activateElementPicker':
-        const activateResult = await this.activateElementPicker();
-        sendResponse(activateResult);
-        break;
+        case 'activateElementPicker':
+          const activateResult = await this.activateElementPicker();
+          sendResponse(activateResult);
+          break;
 
-      case 'deactivateElementPicker':
-        const deactivateResult = await this.deactivateElementPicker();
-        sendResponse(deactivateResult);
-        break;
+        case 'deactivateElementPicker':
+          const deactivateResult = await this.deactivateElementPicker();
+          sendResponse(deactivateResult);
+          break;
 
-      case 'selectPageElement':
-        // This is handled by the click listener when picker is active
-        sendResponse({ success: true, message: 'Element picker is active' });
-        break;
+        case 'selectPageElement':
+          // This is handled by the click listener when picker is active
+          sendResponse({ success: true, message: 'Element picker is active' });
+          break;
 
-      default:
-        sendResponse({
-          success: false,
-          error: `Unknown action: ${request.action}`
-        });
+        default:
+          sendResponse({
+            success: false,
+            error: `Unknown action: ${request.action}`
+          });
       }
     } catch (error) {
       sendResponse({
@@ -129,7 +134,6 @@ class ContentScript {
       } else {
         return result;
       }
-
     } catch (error) {
       return {
         success: false,
@@ -179,7 +183,6 @@ class ContentScript {
         success: true,
         message: 'Element picker activated'
       };
-
     } catch (error) {
       return {
         success: false,
@@ -218,7 +221,6 @@ class ContentScript {
         success: true,
         message: 'Element picker deactivated'
       };
-
     } catch (error) {
       return {
         success: false,
@@ -235,7 +237,7 @@ class ContentScript {
     this.removePickerOverlay();
 
     const overlay = document.createElement('div');
-    overlay.id = 'i18n-key-finder-overlay';
+    overlay.id = OVERLAY_ID;
     overlay.style.cssText = `
       position: fixed;
       top: 0;
@@ -276,7 +278,7 @@ class ContentScript {
    * Remove visual overlay
    */
   removePickerOverlay() {
-    const existingOverlay = document.getElementById('i18n-key-finder-overlay');
+    const existingOverlay = document.getElementById(OVERLAY_ID);
     if (existingOverlay) {
       existingOverlay.remove();
     }
@@ -288,7 +290,7 @@ class ContentScript {
   setupElementClickListener() {
     let currentHighlighted = null;
 
-    const clickHandler = (event) => {
+    const clickHandler = event => {
       if (!this.isElementPickerActive) {
         return;
       }
@@ -299,13 +301,13 @@ class ContentScript {
       this.handleElementClick(event.target);
     };
 
-    const keyHandler = (event) => {
+    const keyHandler = event => {
       if (event.key === 'Escape' && this.isElementPickerActive) {
         this.deactivateElementPicker();
       }
     };
 
-    const mouseoverHandler = (event) => {
+    const mouseoverHandler = event => {
       if (!this.isElementPickerActive) {
         return;
       }
@@ -320,7 +322,7 @@ class ContentScript {
       this.addElementHighlight(currentHighlighted);
     };
 
-    const mouseoutHandler = (event) => {
+    const mouseoutHandler = event => {
       if (!this.isElementPickerActive) {
         return;
       }
@@ -372,7 +374,6 @@ class ContentScript {
         success: true,
         text: text.trim()
       });
-
     } catch (error) {
       this.sendElementSelectionResult({
         success: false,
@@ -455,8 +456,10 @@ class ContentScript {
     }
 
     // Restore original styles
-    const originalOutline = element.getAttribute('data-i18n-original-outline') || '';
-    const originalBackground = element.getAttribute('data-i18n-original-background') || '';
+    const originalOutline =
+      element.getAttribute('data-i18n-original-outline') || '';
+    const originalBackground =
+      element.getAttribute('data-i18n-original-background') || '';
 
     element.style.outline = originalOutline;
     element.style.background = originalBackground;
@@ -480,8 +483,9 @@ class ContentScript {
     };
 
     if (checks.hasNuxt) {
-      checks.nuxtKeys = Object.keys(window.__NUXT__.state)
-        .filter(key => key.startsWith('$si18n_'));
+      checks.nuxtKeys = Object.keys(window.__NUXT__.state).filter(key =>
+        key.startsWith('$si18n_')
+      );
     }
 
     if (checks.hasInitState) {
