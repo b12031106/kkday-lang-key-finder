@@ -295,12 +295,101 @@ npm run lint:fix
 
 The extension requires the following permissions:
 
-- `activeTab` - Access current tab for element picker and data extraction
-- `storage` - Save extension state across sessions
-- `clipboardWrite` - Copy translation keys to clipboard
-- `tabs` - Query active tab information
-- `contextMenus` - Right-click menu integration
-- `scripting` - Inject content and page scripts for data extraction
+### Required Permissions
+
+#### `activeTab`
+**Purpose**: Access the currently active tab to enable element picker and data extraction features.
+
+**Usage in code**:
+- `popup.js:97` - Query active tab information to determine current page URL and domain
+- Enables element picker to interact with page elements
+- Required for extracting translation data from the current page context
+
+**Justification**: This permission is essential for the core functionality of finding i18n translation keys on the current page. It only accesses the active tab when the user explicitly opens the popup or activates the element picker.
+
+---
+
+#### `clipboardWrite`
+**Purpose**: Copy translation keys to the user's clipboard for easy pasting into code.
+
+**Usage in code**:
+- `popup.js:551` - Copy selected translation key when user clicks copy button
+- `content-script-browser.js:733` - Auto-copy key when user selects element via picker
+- `service-worker-browser.js:100-194` - Handle clipboard operations via service worker
+
+**Justification**: This is a core feature that saves developers significant time. When a user finds a translation key (either through search or element picker), they can copy it with one click instead of manually selecting and copying text.
+
+---
+
+#### `storage`
+**Purpose**: Save user preferences and extension settings across browser sessions.
+
+**Usage in code**:
+- `service-worker-browser.js:60` - Store default settings on first install
+- `service-worker-browser.js:269, 296` - Read user settings and usage statistics
+- `service-worker-browser.js:285, 312` - Update settings and statistics
+
+**Justification**: Allows the extension to remember user preferences like search threshold, maximum results, and notification settings. This improves user experience by maintaining consistent behavior across sessions.
+
+---
+
+#### `notifications`
+**Purpose**: Display system notifications to provide user feedback when element picker finds or fails to find a translation key.
+
+**Usage in code**:
+- `service-worker-browser.js:254` - Show success notification when element is selected and key is found
+- `service-worker-browser.js:361` - Show error notification when search fails or user is not on KKday website
+
+**Justification**: Provides immediate visual feedback to users when using the element picker feature, especially since the popup closes during element selection. Without notifications, users would not know if their action succeeded or failed.
+
+---
+
+#### `tabs`
+**Purpose**: Query and monitor tab information to detect KKday websites and manage content script injection.
+
+**Usage in code**:
+- `popup.js:97` - Query current active tab to check domain and URL
+- `popup.js:281, 691` - Inject scripts and send messages to content script
+- `service-worker-browser.js:169` - Query tabs for clipboard operations
+- `service-worker-browser.js:202` - Listen to tab updates (`chrome.tabs.onUpdated`) to auto-inject content scripts
+- `service-worker-browser.js:351` - Send messages to tabs for context menu search
+
+**Justification**: Essential for verifying that the extension is running on a KKday domain (*.kkday.com) and for managing communication between the popup, content script, and service worker. The `onUpdated` listener ensures content scripts are ready when users navigate between pages.
+
+---
+
+#### `contextMenus`
+**Purpose**: Add right-click context menu option to search for i18n keys from selected text.
+
+**Usage in code**:
+- `service-worker-browser.js:330` - Create context menu item "Search I18n Key for '%s'"
+- `service-worker-browser.js:338` - Handle context menu click events
+- `service-worker-browser.js:348` - Process context menu search requests
+
+**Justification**: Provides an additional convenient way for users to search for translation keys. Users can select any text on the page, right-click, and immediately search for its translation key without opening the popup first.
+
+---
+
+#### `scripting`
+**Purpose**: Dynamically inject content scripts into KKday web pages to extract translation data.
+
+**Usage in code**:
+- `popup.js:281` - Inject content script using `chrome.scripting.executeScript` when content script is not already loaded
+- `service-worker-browser.js:171` - Execute inline script for clipboard operations as fallback method
+
+**Justification**: Required for the extension's primary function of extracting translation data from KKday pages. The content script needs to be injected to access page context and extract i18n data from global variables like `__NUXT__`, `__NEXT_DATA__`, etc. Dynamic injection is necessary because pages may load at different times or be dynamically navigated.
+
+---
+
+#### `host_permissions: "*://*.kkday.com/*"`
+**Purpose**: Grant permission to run content scripts on all KKday domains.
+
+**Usage in code**:
+- Enables content scripts to run on all KKday subdomains (www.kkday.com, zh-tw.kkday.com, etc.)
+- Allows extraction of translation data from page context
+- Required for element picker to access and highlight page elements
+
+**Justification**: The extension is specifically designed for KKday websites and needs to access translation data stored in the page's JavaScript context. This permission is limited to `*.kkday.com` domains only and does not request access to any other websites.
 
 ### Privacy & Data Handling
 
