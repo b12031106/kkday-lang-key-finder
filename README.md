@@ -4,8 +4,9 @@ A Chrome extension designed to help developers find i18n translation keys on KKd
 
 ## Features
 
-- 🔍 **Fuzzy Search**: Search for translation keys using partial text matches with accuracy scoring
+- 🔍 **Fuzzy Search**: Advanced fuzzy search using Fuse.js with intelligent scoring and weighting
 - 🎯 **Element Picker**: Click on any element to find its corresponding translation key instantly
+- 🖱️ **Context Menu Search**: Right-click selected text to search for translation keys directly
 - 📋 **Quick Copy**: One-click copy translation keys to clipboard
 - 🌐 **Multi-language Support**: Works with all KKday language versions
 - ⚡ **Real-time Search**: Instant search results as you type with debouncing
@@ -62,6 +63,14 @@ npm test
 6. The key will be automatically copied and a notification will show the result
 7. Press ESC to exit picker mode at any time
 
+### Context Menu Search (Right-Click)
+
+1. Select any text on a KKday website
+2. Right-click and choose "Search I18n Key for [selected text]"
+3. A notification will appear showing the search result
+4. If found, the translation key is automatically copied to clipboard
+5. No need to open the popup first - works instantly!
+
 ### Understanding Accuracy Scores
 
 Results show accuracy scores to help you find the best match:
@@ -93,7 +102,7 @@ flowchart TB
 
     subgraph Processing["⚙️ Data Processing"]
         Extract["📦 Extract & Flatten<br/>• Nested objects<br/>• Array handling<br/>• Key-value pairs"]
-        Search["🔎 Fuzzy Search<br/>• Exact match (100%)<br/>• Starts with (80%)<br/>• Contains (40-60%)"]
+        Search["🔎 Fuse.js Fuzzy Search<br/>• Threshold: 0.3<br/>• Val weight: 0.7<br/>• Key weight: 0.3"]
     end
 
     %% Main Flow
@@ -195,10 +204,11 @@ flowchart TB
 6. **Data Processing**: Content script flattens nested objects into `{key, val}` pairs
 7. **Delayed Retry**: After 2 seconds, attempts extraction again for dynamic content
 8. **User Interaction**: When popup opens, requests processed data from content script
-9. **Fuzzy Search**: Popup performs search with accuracy scoring:
-   - Exact match: 100%
-   - Text starts with query: 80%
-   - Text contains query: 40-60% (based on length ratio)
+9. **Fuzzy Search**: Popup uses Fuse.js for intelligent fuzzy matching:
+   - Threshold: 0.3 (controls match sensitivity)
+   - Translation text (val) weighted at 0.7 (primary search target)
+   - Key weighted at 0.3 (secondary search target)
+   - Scores inverted for display (1.0 = perfect match)
 10. **Display Results**: Shows ranked results with color-coded accuracy badges
 
 ### Element Picker Workflow
@@ -224,7 +234,8 @@ kkday-lang-key-finder/
 │   ├── popup/           # Popup UI components
 │   ├── content/          # Content and page scripts
 │   ├── background/       # Service worker
-│   └── models/           # Data models
+│   ├── lib/             # Third-party libraries (fuse.min.js)
+│   └── models/           # Data models (unused in production)
 ├── tests/
 │   ├── unit/            # Unit tests
 │   ├── integration/     # Integration tests

@@ -285,49 +285,48 @@ class PopupController {
   }
 
   /**
-   * Initialize search functionality
+   * Initialize search functionality with Fuse.js
    */
   initializeSearch() {
-    // Simple search implementation without external dependencies
+    // Check if Fuse is available
+    if (typeof Fuse === 'undefined') {
+      console.error('Fuse.js not loaded');
+      return;
+    }
+
+    // Configure Fuse.js options
+    const fuseOptions = {
+      keys: [
+        { name: 'val', weight: 0.7 },  // 翻譯文字權重較高（使用者主要搜尋翻譯文字）
+        { name: 'key', weight: 0.3 }   // 鍵值權重較低（輔助搜尋）
+      ],
+      threshold: 0.3, // 0.0 = exact match, 1.0 = match anything
+      distance: 100,
+      minMatchCharLength: 2,
+      includeScore: true,
+      ignoreLocation: true
+    };
+
+    // Create Fuse instance
+    const fuse = new Fuse(this.translations, fuseOptions);
+
+    // Create search service wrapper
     this.searchService = {
       search: (query, options = {}) => {
         if (!query || !this.translations) {
           return [];
         }
 
-        const normalizedQuery = query.toLowerCase().trim();
         const limit = options.limit || 20;
 
-        // Simple fuzzy search
-        const results = this.translations
-          .map(item => {
-            const keyMatch = item.key.toLowerCase().includes(normalizedQuery);
-            const valMatch = item.val.toLowerCase().includes(normalizedQuery);
+        // Use Fuse.js for fuzzy search
+        const fuseResults = fuse.search(query, { limit });
 
-            if (!keyMatch && !valMatch) {
-              return null;
-            }
-
-            // Calculate simple relevance score
-            let score = 0;
-            if (item.key.toLowerCase() === normalizedQuery || item.val.toLowerCase() === normalizedQuery) {
-              score = 1.0; // Exact match
-            } else if (item.key.toLowerCase().startsWith(normalizedQuery) || item.val.toLowerCase().startsWith(normalizedQuery)) {
-              score = 0.8; // Starts with
-            } else if (keyMatch && valMatch) {
-              score = 0.6; // Both contain
-            } else if (keyMatch || valMatch) {
-              score = 0.4; // One contains
-            }
-
-            return {
-              item: item,
-              score: score
-            };
-          })
-          .filter(result => result !== null)
-          .sort((a, b) => b.score - a.score)
-          .slice(0, limit);
+        // Convert Fuse.js results to our format
+        const results = fuseResults.map(result => ({
+          item: result.item,
+          score: 1 - result.score // Invert score (Fuse uses 0=best, we use 1=best)
+        }));
 
         return results;
       }

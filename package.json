@@ -10,7 +10,8 @@
     "lint:fix": "eslint src/ tests/ --fix",
     "format": "prettier --write src/ tests/",
     "build": "npm run lint && npm run test",
-    "dev": "npm run lint:fix && npm run format"
+    "dev": "npm run lint:fix && npm run format",
+    "package": "zip -r kkday-lang-key-finder.zip manifest.json icons/*.png src/popup src/content src/background src/lib -x '*.DS_Store' -x '*/.DS_Store'"
   },
   "dependencies": {
     "fuse.js": "^7.0.0"

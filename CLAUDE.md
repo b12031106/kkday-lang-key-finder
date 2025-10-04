@@ -15,7 +15,7 @@ Chrome extension for finding i18n translation keys on KKday websites. Extracts t
 ## Active Technologies
 - JavaScript ES2022, HTML5, CSS3 (Chrome Extension Manifest V3)
 - Chrome Extension APIs (tabs, scripting, storage, clipboardWrite, contextMenus)
-- Fuse.js for fuzzy search (installed but inline algorithm preferred for production)
+- Fuse.js v7.0.0 for fuzzy search (browser version integrated in src/lib)
 - CSS Grid Layout for modern UI
 - Jest for testing, ESLint/Prettier for code quality
 
@@ -30,8 +30,10 @@ src/
 │   ├── content-script-browser.js  # Element picker, data bridging
 │   └── page-script.js      # Page context data extraction
 ├── background/              # Service worker
-│   └── service-worker-browser.js  # Extension lifecycle management
-└── services/                # Shared services
+│   └── service-worker-browser.js  # Extension lifecycle, context menu
+├── lib/                     # Third-party libraries
+│   └── fuse.min.js         # Fuse.js browser version (26KB)
+└── services/                # Shared services (unused in production)
     └── DataExtractionService.js   # Data extraction utilities
 
 tests/
@@ -67,6 +69,13 @@ npm run lint:fix      # Auto-fix lint issues
 npm run format        # Format code with Prettier
 ```
 
+### Packaging
+```bash
+npm run package       # Create release zip for Chrome Web Store
+                      # Includes: manifest.json, icons/, src/popup,
+                      # src/content, src/background, src/lib
+```
+
 ### Loading Extension
 1. Navigate to `chrome://extensions/`
 2. Enable "Developer mode"
@@ -86,6 +95,7 @@ npm run format        # Format code with Prettier
 - All scripts must work without Node.js modules
 - Use Chrome Extension APIs directly
 - No bundlers or transpilers (pure ES2022)
+- Third-party libraries loaded as browser globals (e.g., Fuse.js via <script>)
 
 ### Key Patterns
 
@@ -100,10 +110,11 @@ npm run format        # Format code with Prettier
    sanitizeData(obj, maxDepth = 10, currentDepth = 0)
    ```
 
-3. **Fuzzy Search Scoring**:
-   - Exact match: 100%
-   - Starts with: 80%
-   - Contains: 40-60% (length ratio)
+3. **Fuzzy Search with Fuse.js**:
+   - Uses Fuse.js v7.0.0 for intelligent fuzzy matching
+   - Configuration: threshold 0.3, val weight 0.7, key weight 0.3
+   - Prioritizes translation text (val) over keys for user-friendly search
+   - Score inverted for display (1.0 = best match)
 
 4. **Accuracy Color Coding**:
    - ≥90%: Green (#10b981)
@@ -124,6 +135,14 @@ npm run format        # Format code with Prettier
 3. **No console.log in production**: All debug logs removed for clean production code
 
 ## Recent Changes
+
+### 2025-10-05: Fuse.js integration and context menu
+- ✅ Integrated Fuse.js v7.0.0 for advanced fuzzy search
+- ✅ Added right-click context menu search functionality
+- ✅ Configured optimal search weights (val: 0.7, key: 0.3)
+- ✅ Fixed service worker context menu listener persistence
+- ✅ Implemented dynamic content script injection for context menu
+- ✅ Updated packaging to include src/lib/fuse.min.js
 
 ### 2025-10-01: Production-ready release
 - ✅ Removed all console.log statements (107 lines cleaned)
