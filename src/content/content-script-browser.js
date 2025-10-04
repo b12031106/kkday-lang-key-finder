@@ -802,8 +802,17 @@
                     font-weight: 600;
                   ">準確率 ${percentage}%</div>
                 </div>
-                <div style="background: #f3f4f6; padding: 10px 12px; border-radius: 6px; margin-bottom: 8px; font-family: 'Courier New', monospace; font-size: 13px; word-break: break-all; color: #1f2937; border: 1px solid #e5e7eb;">
-                  ${this.escapeHtml(result.key)}
+                <div style="margin-bottom: 8px;">
+                  <div style="font-size: 11px; color: #6b7280; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">搜尋文字</div>
+                  <div style="background: #f9fafb; padding: 8px 10px; border-radius: 6px; font-size: 13px; color: #374151; border: 1px solid #e5e7eb; line-height: 1.5;">
+                    「${this.escapeHtml(result.elementText)}」
+                  </div>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <div style="font-size: 11px; color: #6b7280; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">翻譯鍵值</div>
+                  <div style="background: #f3f4f6; padding: 10px 12px; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 13px; word-break: break-all; color: #1f2937; border: 1px solid #e5e7eb;">
+                    ${this.escapeHtml(result.key)}
+                  </div>
                 </div>
                 <div style="font-size: 12px; color: #6b7280; font-weight: 500;">
                   ✓ 已複製到剪貼簿
