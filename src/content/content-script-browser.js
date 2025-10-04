@@ -301,6 +301,50 @@
           });
           break;
 
+        case 'searchFromContextMenu': {
+          // Handle search request from context menu
+          const query = request.query;
+
+          // Ensure we have translation data
+          if (!this.translationData || this.translationData.length === 0) {
+            this.extractTranslationData();
+          }
+
+          if (query && this.translationData) {
+            const matchResult = this.findTranslationByText(query);
+
+            if (matchResult) {
+              // Copy to clipboard
+              this.copyToClipboard(matchResult.entry.key);
+
+              // Show success notification
+              this.showResultNotification({
+                success: true,
+                key: matchResult.entry.key,
+                value: matchResult.entry.val,
+                score: matchResult.score,
+                elementText: query.substring(0, 50) + (query.length > 50 ? '...' : '')
+              });
+            } else {
+              // Show no match notification
+              this.showResultNotification({
+                success: false,
+                elementText: query.substring(0, 50) + (query.length > 50 ? '...' : '')
+              });
+            }
+          } else {
+            // No translation data available
+            this.showResultNotification({
+              success: false,
+              elementText: query.substring(0, 50) + (query.length > 50 ? '...' : ''),
+              noData: true
+            });
+          }
+
+          sendResponse({ success: true });
+          break;
+        }
+
         case 'ping':
           sendResponse({ success: true });
           break;
@@ -822,6 +866,11 @@
           </div>
         `;
       } else {
+        const errorTitle = result.noData ? '無法取得翻譯資料' : '找不到對應的翻譯鍵值';
+        const errorMessage = result.noData
+          ? '請確認頁面已載入完成，或嘗試重新整理頁面'
+          : `「${this.escapeHtml(result.elementText)}」`;
+
         notification.innerHTML = `
           <div style="
             position: fixed;
@@ -842,9 +891,9 @@
             <div style="display: flex; align-items: start; gap: 12px;">
               <span style="font-size: 24px;">❌</span>
               <div style="flex: 1;">
-                <div style="font-weight: 700; font-size: 15px; color: #ef4444; margin-bottom: 10px;">找不到對應的翻譯鍵值</div>
+                <div style="font-weight: 700; font-size: 15px; color: #ef4444; margin-bottom: 10px;">${errorTitle}</div>
                 <div style="background: #fef2f2; padding: 10px 12px; border-radius: 6px; font-size: 13px; color: #991b1b; border: 1px solid #fecaca;">
-                  「${this.escapeHtml(result.elementText)}」
+                  ${errorMessage}
                 </div>
               </div>
             </div>

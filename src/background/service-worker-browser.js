@@ -19,6 +19,7 @@ class BackgroundService {
     this.setupMessageListener();
     this.setupTabListener();
     this.setupActionListener();
+    this.setupContextMenus();
   }
 
   /**
@@ -316,9 +317,9 @@ class BackgroundService {
   }
 
   /**
-   * Create context menu items
+   * Set up context menus and listeners
    */
-  createContextMenus() {
+  setupContextMenus() {
     // Check if contextMenus API is available
     if (!chrome.contextMenus) {
       return;
@@ -343,27 +344,52 @@ class BackgroundService {
   }
 
   /**
+   * Create context menu items (called during installation)
+   */
+  createContextMenus() {
+    this.setupContextMenus();
+  }
+
+  /**
    * Handle context menu search
    */
   async handleContextMenuSearch(text, tab) {
     try {
-      // Send message to content script to search
+      // First, try to ping the content script to see if it's loaded
+      await chrome.tabs.sendMessage(tab.id, { action: 'ping' });
+
+      // If ping succeeds, send the search request
       await chrome.tabs.sendMessage(tab.id, {
         action: 'searchFromContextMenu',
         query: text
       });
 
-      // Open popup if needed
-      chrome.action.openPopup();
-
     } catch (error) {
-      // Show notification about error
-      chrome.notifications.create({
-        type: 'basic',
-        iconUrl: chrome.runtime.getURL('icons/icon128.png'),
-        title: 'Search Error',
-        message: 'Please make sure you are on a KKday website'
-      });
+      // Content script not responding, try to inject it
+      try {
+        await chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          files: ['src/content/content-script-browser.js']
+        });
+
+        // Wait for content script to initialize and inject page script
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Try the search again
+        await chrome.tabs.sendMessage(tab.id, {
+          action: 'searchFromContextMenu',
+          query: text
+        });
+
+      } catch (injectError) {
+        // Injection failed, show error notification
+        chrome.notifications.create({
+          type: 'basic',
+          iconUrl: chrome.runtime.getURL('icons/icon128.png'),
+          title: '搜尋失敗',
+          message: '請確認您在 KKday 網站上，並嘗試重新整理頁面後再試'
+        });
+      }
     }
   }
 }
