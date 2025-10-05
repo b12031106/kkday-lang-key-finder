@@ -1,4 +1,4 @@
-# I18n Key Finder 快速入門指南
+# KKday Lang Key Finder 快速入門指南
 
 ## 🚀 快速安裝（5分鐘內開始使用）
 
@@ -29,7 +29,7 @@ npm test
 
 ## ✅ 驗證安裝
 
-1. 在瀏覽器工具列看到 I18n Key Finder 圖示（藍色搜尋圖示）
+1. 在瀏覽器工具列看到 KKday Lang Key Finder 圖示（藍色搜尋圖示）
 2. 訪問任何 `*.kkday.com` 網站
 3. 點擊擴充功能圖示，應該會看到搜尋介面
 
@@ -161,7 +161,7 @@ lang-key-finder/
 
 ## 🎉 恭喜！
 
-如果以上步驟都順利完成，您已經成功安裝並驗證了 I18n Key Finder！
+如果以上步驟都順利完成，您已經成功安裝並驗證了 KKday Lang Key Finder！
 
 現在您可以：
 1. 在 KKday 網站上快速查找翻譯 key
