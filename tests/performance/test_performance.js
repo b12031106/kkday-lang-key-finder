@@ -6,14 +6,13 @@
 const SearchService = require('../../src/services/SearchService');
 const TranslationEntry = require('../../src/models/TranslationEntry');
 const PageContext = require('../../src/models/PageContext');
-const DataExtractionService = require('../../src/services/DataExtractionService');
 
 // CI 環境通常比本地慢 3 倍，放寬時間限制
 const CI_MULTIPLIER = process.env.CI ? 3 : 1;
 
 // Mock Fuse.js for consistent performance testing
 jest.mock('fuse.js', () => {
-  return jest.fn().mockImplementation((data, options) => {
+  return jest.fn().mockImplementation((data, _options) => {
     return {
       search: jest.fn((query, searchOptions) => {
         const results = data.filter(item => {
@@ -258,7 +257,7 @@ describe('Performance Test Suite', () => {
       const startTime = performance.now();
 
       // 1. Create page context
-      const context = new PageContext(
+      new PageContext(
         'www.kkday.com',
         '/zh-tw/product/123',
         true,

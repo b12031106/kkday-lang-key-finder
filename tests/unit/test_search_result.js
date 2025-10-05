@@ -210,7 +210,7 @@ describe('SearchResult Model Unit Tests', () => {
       test('should include confidence level in object', () => {
         const entry = new TranslationEntry('lang_key', 'value');
         const result = new SearchResult(entry, 0.15);
-        const obj = result.toObject();
+        result.toObject();
 
         // Check if confidence level is accessible
         const confidence = result.getConfidenceLevel();

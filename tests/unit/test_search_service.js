@@ -9,7 +9,7 @@ const SearchResult = require('../../src/models/SearchResult');
 
 // Mock Fuse.js
 jest.mock('fuse.js', () => {
-  return jest.fn().mockImplementation((data, options) => {
+  return jest.fn().mockImplementation((data, _options) => {
     return {
       search: jest.fn((query, searchOptions) => {
         // Simple mock search implementation
@@ -268,7 +268,7 @@ describe('SearchService Unit Tests', () => {
         const all = searchService.getAllTranslations();
 
         expect(all.length).toBe(mockTranslations.length);
-        all.forEach((item, index) => {
+        all.forEach((item) => {
           expect(item).toBeInstanceOf(SearchResult);
         });
       }

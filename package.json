@@ -15,24 +15,28 @@
     "version": "node scripts/sync-version.js && git add manifest.json",
     "release:patch": "npm version patch && git push && git push --tags",
     "release:minor": "npm version minor && git push && git push --tags",
-    "release:major": "npm version major && git push && git push --tags"
+    "release:major": "npm version major && git push && git push --tags",
+    "prepare": "husky"
   },
   "dependencies": {
     "fuse.js": "^7.0.0"
   },
   "devDependencies": {
-    "jest": "^27.5.1",
-    "jest-environment-jsdom": "^27.5.1",
-    "jest-chrome": "^0.8.0",
-    "eslint": "^8.57.0",
-    "prettier": "^3.1.0",
     "@babel/core": "^7.23.0",
     "@babel/preset-env": "^7.23.0",
-    "babel-jest": "^27.5.1"
+    "babel-jest": "^27.5.1",
+    "eslint": "^8.57.0",
+    "husky": "^9.1.7",
+    "jest": "^27.5.1",
+    "jest-chrome": "^0.8.0",
+    "jest-environment-jsdom": "^27.5.1",
+    "prettier": "^3.1.0"
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ],
     "testMatch": [
       "**/tests/**/test_*.js"
     ],
@@ -42,9 +46,16 @@
     ]
   },
   "babel": {
-    "presets": ["@babel/preset-env"]
+    "presets": [
+      "@babel/preset-env"
+    ]
   },
-  "keywords": ["chrome-extension", "i18n", "translation", "kkday"],
+  "keywords": [
+    "chrome-extension",
+    "i18n",
+    "translation",
+    "kkday"
+  ],
   "author": "Your Name",
   "license": "MIT"
 }

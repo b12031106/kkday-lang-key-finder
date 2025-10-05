@@ -61,36 +61,40 @@ class ContentScript {
   async handleMessage(request, sender, sendResponse) {
     try {
       switch (request.action) {
-        case 'extractTranslationData':
-          const extractResult = await this.extractTranslationData();
-          sendResponse(extractResult);
-          break;
+      case 'extractTranslationData': {
+        const extractResult = await this.extractTranslationData();
+        sendResponse(extractResult);
+        break;
+      }
 
-        case 'getPageContext':
-          const contextResult = await this.getPageContext();
-          sendResponse(contextResult);
-          break;
+      case 'getPageContext': {
+        const contextResult = await this.getPageContext();
+        sendResponse(contextResult);
+        break;
+      }
 
-        case 'activateElementPicker':
-          const activateResult = await this.activateElementPicker();
-          sendResponse(activateResult);
-          break;
+      case 'activateElementPicker': {
+        const activateResult = await this.activateElementPicker();
+        sendResponse(activateResult);
+        break;
+      }
 
-        case 'deactivateElementPicker':
-          const deactivateResult = await this.deactivateElementPicker();
-          sendResponse(deactivateResult);
-          break;
+      case 'deactivateElementPicker': {
+        const deactivateResult = await this.deactivateElementPicker();
+        sendResponse(deactivateResult);
+        break;
+      }
 
-        case 'selectPageElement':
-          // This is handled by the click listener when picker is active
-          sendResponse({ success: true, message: 'Element picker is active' });
-          break;
+      case 'selectPageElement':
+        // This is handled by the click listener when picker is active
+        sendResponse({ success: true, message: 'Element picker is active' });
+        break;
 
-        default:
-          sendResponse({
-            success: false,
-            error: `Unknown action: ${request.action}`
-          });
+      default:
+        sendResponse({
+          success: false,
+          error: `Unknown action: ${request.action}`
+        });
       }
     } catch (error) {
       sendResponse({
@@ -322,7 +326,7 @@ class ContentScript {
       this.addElementHighlight(currentHighlighted);
     };
 
-    const mouseoutHandler = event => {
+    const mouseoutHandler = _event => {
       if (!this.isElementPickerActive) {
         return;
       }

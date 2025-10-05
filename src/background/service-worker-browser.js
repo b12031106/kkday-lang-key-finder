@@ -76,7 +76,7 @@ class BackgroundService {
   /**
    * Handle extension update
    */
-  handleUpdate(previousVersion) {
+  handleUpdate(_previousVersion) {
     // Perform any necessary migrations
     // For now, no special handling needed
   }
@@ -234,7 +234,7 @@ class BackgroundService {
   setupActionListener() {
     // In Manifest V3, clicking the action opens the popup automatically
     // We can still listen for clicks if popup is not set
-    chrome.action.onClicked.addListener((tab) => {
+    chrome.action.onClicked.addListener((_tab) => {
       // Action clicked
     });
   }
@@ -396,7 +396,7 @@ class BackgroundService {
 
 // Initialize background service only in browser environment
 if (typeof chrome !== 'undefined' && chrome.runtime) {
-  const backgroundService = new BackgroundService();
+  new BackgroundService();
 
   // Export for testing
   if (typeof self !== 'undefined') {

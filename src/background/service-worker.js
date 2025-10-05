@@ -106,10 +106,11 @@ class BackgroundService {
   async handleMessage(request, sender, sendResponse) {
     try {
       switch (request.action) {
-      case 'copyToClipboard':
+      case 'copyToClipboard': {
         const copyResult = await this.handleClipboardCopy(request.text);
         sendResponse(copyResult);
         break;
+      }
 
       case 'elementSelected':
         await this.handleElementSelection(request.result, sender.tab);
@@ -121,10 +122,11 @@ class BackgroundService {
         sendResponse({ success: true });
         break;
 
-      case 'getSettings':
+      case 'getSettings': {
         const settings = await this.getSettings();
         sendResponse(settings);
         break;
+      }
 
       case 'updateSettings':
         await this.updateSettings(request.settings);
@@ -176,7 +178,7 @@ class BackgroundService {
   /**
    * Handle element selection notification
    */
-  async handleElementSelection(result, tab) {
+  async handleElementSelection(result, _tab) {
     try {
       // Forward the element selection result to the popup if it's open
       if (result.success) {
@@ -210,7 +212,7 @@ class BackgroundService {
   /**
    * Handle tab update events
    */
-  handleTabUpdate(tabId, changeInfo, tab) {
+  handleTabUpdate(_tabId, changeInfo, tab) {
     // Update extension badge based on page type
     if (changeInfo.status === 'complete' && tab.url) {
       this.updateExtensionBadge(tab);

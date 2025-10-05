@@ -65,7 +65,9 @@
     listenForPageData() {
       window.addEventListener('message', (event) => {
         // Only accept messages from the same window
-        if (event.source !== window) return;
+        if (event.source !== window) {
+          return;
+        }
 
         if (event.data.type === 'I18N_KEY_FINDER_DATA') {
           if (event.data.data) {
@@ -81,9 +83,6 @@
      */
     extractTranslationData() {
       try {
-        const pathname = window.location.pathname;
-        const isProductPage = /^\/[a-z]{2}(-[a-z]{2})?\/product\/\d+/i.test(pathname);
-
         let data = null;
 
         // Method 1: Check for Next.js __NEXT_DATA__
@@ -154,11 +153,11 @@
               if (obj.store?.data) {
                 data = obj.store.data;
                 break;
-              } else if (obj.messages) {
-                data = obj.messages;
-                break;
               } else if (obj.locale && obj.messages) {
                 data = obj.messages[obj.locale] || obj.messages;
+                break;
+              } else if (obj.messages) {
+                data = obj.messages;
                 break;
               } else if (typeof obj === 'object' && !obj.nodeName) {
                 // Check if the object itself contains translations
@@ -279,7 +278,7 @@
     setupMessageListener() {
       chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         switch (request.action) {
-        case 'getTranslations':
+        case 'getTranslations': {
           // Try to extract data again if we don't have any
           if (!this.translationData || this.translationData.length === 0) {
             this.extractTranslationData();
@@ -292,6 +291,7 @@
 
           sendResponse(responseData);
           break;
+        }
 
         case 'toggleElementPicker':
           this.toggleElementPicker();
@@ -580,7 +580,9 @@
      */
     adjustNotificationPosition(mouseX, mouseY) {
       const notification = document.getElementById('i18n-picker-notification');
-      if (!notification) return;
+      if (!notification) {
+        return;
+      }
 
       const rect = notification.getBoundingClientRect();
       const buffer = 100; // Distance from mouse to trigger repositioning

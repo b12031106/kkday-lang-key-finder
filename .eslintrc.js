@@ -13,10 +13,15 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
+  ignorePatterns: [
+    'src/lib/**/*.min.js'
+  ],
   globals: {
     chrome: 'readonly',
     __NUXT__: 'readonly',
     __INIT_STATE__: 'readonly',
+    __NEXT_DATA__: 'readonly',
+    Fuse: 'readonly',
     module: 'writable',
     global: 'readonly',
     __dirname: 'readonly'

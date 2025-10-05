@@ -121,10 +121,18 @@
         const value = obj[key];
 
         // 跳過函數、DOM 節點、和其他不可序列化的類型
-        if (typeof value === 'function') continue;
-        if (value instanceof Node) continue;
-        if (value instanceof Window) continue;
-        if (value instanceof Element) continue;
+        if (typeof value === 'function') {
+          continue;
+        }
+        if (value instanceof Node) {
+          continue;
+        }
+        if (value instanceof Window) {
+          continue;
+        }
+        if (value instanceof Element) {
+          continue;
+        }
 
         // 遞迴處理物件和陣列
         if (typeof value === 'object' && value !== null) {
