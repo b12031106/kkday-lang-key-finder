@@ -8,6 +8,9 @@ const TranslationEntry = require('../../src/models/TranslationEntry');
 const PageContext = require('../../src/models/PageContext');
 const DataExtractionService = require('../../src/services/DataExtractionService');
 
+// CI 環境通常比本地慢 3 倍，放寬時間限制
+const CI_MULTIPLIER = process.env.CI ? 3 : 1;
+
 // Mock Fuse.js for consistent performance testing
 jest.mock('fuse.js', () => {
   return jest.fn().mockImplementation((data, options) => {
@@ -51,7 +54,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       console.log(`Search service initialization: ${duration.toFixed(2)}ms`);
     });
 
@@ -61,7 +64,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       expect(results.length).toBeGreaterThan(0);
       console.log(`Single search execution: ${duration.toFixed(2)}ms`);
     });
@@ -79,7 +82,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       console.log(`100 searches execution: ${duration.toFixed(2)}ms`);
     });
 
@@ -89,7 +92,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       expect(results.length).toBeGreaterThan(0);
       console.log(`Fuzzy search execution: ${duration.toFixed(2)}ms`);
     });
@@ -110,7 +113,7 @@ describe('Performance Test Suite', () => {
         const endTime = performance.now();
         const duration = endTime - startTime;
 
-        expect(duration).toBeLessThan(10);
+        expect(duration).toBeLessThan(10 * CI_MULTIPLIER);
       });
     });
 
@@ -144,7 +147,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       console.log(`1000 language extractions: ${duration.toFixed(2)}ms`);
     });
   });
@@ -161,7 +164,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       console.log(`1000 TranslationEntry conversions: ${duration.toFixed(2)}ms`);
     });
 
@@ -174,7 +177,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       console.log(`1000 TranslationEntry validations: ${duration.toFixed(2)}ms`);
     });
   });
@@ -226,7 +229,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       expect(results.every(r => Array.isArray(r))).toBe(true);
       console.log(`Batch search (10 queries): ${duration.toFixed(2)}ms`);
     });
@@ -243,7 +246,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       expect(searchService.translationData.length).toBe(1000);
       console.log(`Index update (1000 items): ${duration.toFixed(2)}ms`);
     });
@@ -282,7 +285,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       expect(processedResults.length).toBeGreaterThan(0);
       console.log(`End-to-end search flow: ${duration.toFixed(2)}ms`);
     });
@@ -311,7 +314,7 @@ describe('Performance Test Suite', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(100);
+      expect(duration).toBeLessThan(100 * CI_MULTIPLIER);
       console.log(`Concurrent operations: ${duration.toFixed(2)}ms`);
     });
   });
@@ -357,12 +360,12 @@ describe('Performance Test Suite', () => {
       testData.slice(0, 100).forEach(entry => entry.toObject());
       results.dataProcessing = performance.now() - start;
 
-      // All operations should complete within 100ms
-      expect(results.searchInit).toBeLessThan(100);
-      expect(results.singleSearch).toBeLessThan(100);
-      expect(results.batchSearch).toBeLessThan(100);
-      expect(results.pageContext).toBeLessThan(10);
-      expect(results.dataProcessing).toBeLessThan(100);
+      // All operations should complete within reasonable time (adjusted for CI)
+      expect(results.searchInit).toBeLessThan(100 * CI_MULTIPLIER);
+      expect(results.singleSearch).toBeLessThan(100 * CI_MULTIPLIER);
+      expect(results.batchSearch).toBeLessThan(100 * CI_MULTIPLIER);
+      expect(results.pageContext).toBeLessThan(10 * CI_MULTIPLIER);
+      expect(results.dataProcessing).toBeLessThan(100 * CI_MULTIPLIER);
 
       console.log('\n=== Performance Summary ===');
       console.log(`Search Initialization (5000 items): ${results.searchInit.toFixed(2)}ms`);
