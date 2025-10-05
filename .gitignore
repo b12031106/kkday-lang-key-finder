@@ -12,6 +12,9 @@ coverage/
 .DS_Store
 Thumbs.db
 
+# Package files
+*.zip
+
 # Claude Code and Specify directories
 .claude/
 .specify/
