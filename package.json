@@ -34,7 +34,7 @@
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
     "testMatch": [
-      "**/tests/**/*.js"
+      "**/tests/**/test_*.js"
     ],
     "collectCoverageFrom": [
       "src/**/*.js",

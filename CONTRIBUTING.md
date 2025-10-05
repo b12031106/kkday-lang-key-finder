@@ -351,6 +351,21 @@ npm run format           # 格式化程式碼
 npm run build            # 完整建置（lint + test）
 ```
 
+### 測試涵蓋範圍
+
+本專案包含以下自動化測試：
+
+| 測試類型 | 目錄 | 說明 |
+|---------|------|------|
+| 單元測試 | `tests/unit/` | 測試個別函式和類別 |
+| 效能測試 | `tests/performance/` | 驗證搜尋和資料處理效能 |
+| 記憶體測試 | `tests/memory/` | 驗證記憶體使用符合要求 |
+| 瀏覽器相容性 | `tests/browser/` | 檢查瀏覽器 API 相容性 |
+
+所有測試都在 Node.js + jsdom 環境執行，並在 GitHub Actions CI 中自動測試。
+
+**手動測試**: 完整的功能驗證清單請參考 [QUICKSTART.md](./QUICKSTART.md) 的「功能驗證清單」章節。
+
 ## 🐛 回報問題
 
 發現 Bug？請到 [GitHub Issues](https://github.com/b12031106/kkday-lang-key-finder/issues) 建立新 issue：
