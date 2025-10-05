@@ -1,259 +1,254 @@
-# I18n Key Finder Chrome Extension
+# KKday Lang Key Finder Chrome 擴充功能
 
-A Chrome extension designed to help developers find i18n translation keys on KKday websites quickly and efficiently.
+一個專為幫助開發者在 KKday 網站上快速且高效地查找 i18n 翻譯鍵值的 Chrome 擴充功能。
 
-## Features
+## 功能特色
 
-- 🔍 **Fuzzy Search**: Advanced fuzzy search using Fuse.js with intelligent scoring and weighting
-- 🎯 **Element Picker**: Click on any element to find its corresponding translation key instantly
-- 🖱️ **Context Menu Search**: Right-click selected text to search for translation keys directly
-- 📋 **Quick Copy**: One-click copy translation keys to clipboard
-- 🌐 **Multi-language Support**: Works with all KKday language versions
-- ⚡ **Real-time Search**: Instant search results as you type with debouncing
-- 🎨 **Modern UI**: Clean, responsive interface with visual accuracy indicators
-- 📊 **Accuracy Scoring**: Color-coded badges showing match accuracy (90%+ green, 70-89% orange, <70% blue)
-- 🔔 **Smart Notifications**: On-page notifications with dynamic positioning to avoid cursor interference
+- 🔍 **模糊搜尋**：使用 Fuse.js 進行進階模糊搜尋，具備智能評分和權重配置
+- 🎯 **元素選取器**：點擊任何元素即可立即找到對應的翻譯鍵值
+- 🖱️ **右鍵選單搜尋**：選取文字後按右鍵即可直接搜尋翻譯鍵值
+- 📋 **快速複製**：一鍵複製翻譯鍵值到剪貼簿
+- 🌐 **多語言支援**：支援所有 KKday 語言版本
+- ⚡ **即時搜尋**：輸入時即時顯示搜尋結果，並具有防抖動機制
+- 🎨 **現代化介面**：簡潔響應式介面，具有視覺化準確度指示器
+- 📊 **準確度評分**：彩色標籤顯示匹配準確度（90%+ 綠色、70-89% 橙色、<70% 藍色）
+- 🔔 **智能通知**：頁面上的通知具有動態定位功能，避免遮擋游標
 
-## Installation
+## 安裝方式
 
-### From Source
+### 從原始碼安裝
 
-1. Clone this repository:
+1. Clone 此專案：
 
 ```bash
 git clone https://github.com/b12031106/kkday-lang-key-finder.git
 cd kkday-lang-key-finder
 ```
 
-2. Install dependencies:
+2. 安裝依賴套件：
 
 ```bash
 npm install
 ```
 
-3. Run tests:
+3. 執行測試：
 
 ```bash
 npm test
 ```
 
-4. Load the extension in Chrome:
-   - Open Chrome and navigate to `chrome://extensions/`
-   - Enable "Developer mode"
-   - Click "Load unpacked"
-   - Select the project directory
+4. 在 Chrome 中載入擴充功能：
+   - 開啟 Chrome 並前往 `chrome://extensions/`
+   - 啟用「開發人員模式」
+   - 點選「載入未封裝項目」
+   - 選擇專案目錄
 
-## Usage
+## 使用方式
 
-### Basic Search
+### 基本搜尋
 
-1. Navigate to any KKday website (e.g., `https://www.kkday.com/zh-tw/product/123`)
-2. Click the extension icon in the toolbar
-3. Wait for translation data to load (you'll see the count in the status)
-4. Enter text in the search box to find matching translation keys
-5. Click the copy button next to any result to copy the key to clipboard
+1. 前往任何 KKday 網站（例如：`https://www.kkday.com/zh-tw/product/123`）
+2. 點擊工具列中的擴充功能圖示
+3. 等待翻譯資料載入（您會在狀態列看到筆數）
+4. 在搜尋框中輸入文字以找到匹配的翻譯鍵值
+5. 點選任何結果旁的複製按鈕，將鍵值複製到剪貼簿
 
-### Element Picker Mode
+### 元素選取模式
 
-1. Click the extension icon in the toolbar
-2. Click the "選取頁面元素" (Select Page Element) button
-3. The popup will close and an on-page notification will appear
-4. Hover over elements to highlight them
-5. Click any element to find its translation key
-6. The key will be automatically copied and a notification will show the result
-7. Press ESC to exit picker mode at any time
+1. 點擊工具列中的擴充功能圖示
+2. 點選「選取頁面元素」按鈕
+3. Popup 會關閉，頁面上會顯示通知
+4. 將滑鼠懸停在元素上以突顯顯示
+5. 點擊任何元素以找到其翻譯鍵值
+6. 鍵值會自動複製，並顯示結果通知
+7. 隨時按 ESC 鍵退出選取模式
 
-### Context Menu Search (Right-Click)
+### 右鍵選單搜尋
 
-1. Select any text on a KKday website
-2. Right-click and choose "Search I18n Key for [selected text]"
-3. A notification will appear showing the search result
-4. If found, the translation key is automatically copied to clipboard
-5. No need to open the popup first - works instantly!
+1. 在 KKday 網站上選取任何文字
+2. 按右鍵並選擇「Search I18n Key for [選取的文字]」
+3. 頁面上會顯示搜尋結果通知
+4. 如果找到，翻譯鍵值會自動複製到剪貼簿
+5. 無需先開啟 popup，直接就能使用！
 
-### Understanding Accuracy Scores
+### 了解準確度分數
 
-Results show accuracy scores to help you find the best match:
+搜尋結果會顯示準確度分數，幫助您找到最佳匹配：
 
-- **90-100% (Green)**: Exact or near-exact match
-- **70-89% (Orange)**: Good partial match
-- **Below 70% (Blue)**: Loose match, may need verification
+- **90-100%（綠色）**：完全匹配或接近完全匹配
+- **70-89%（橙色）**：良好的部分匹配
+- **低於 70%（藍色）**：鬆散匹配，可能需要驗證
 
-## Architecture & Workflow
+## 架構與工作流程
 
-The extension uses a multi-layer architecture to extract translation data from KKday websites:
+此擴充功能使用多層架構從 KKday 網站提取翻譯資料：
 
 ```mermaid
 flowchart TB
-    subgraph Browser["🌐 Browser Environment"]
-        User[("👤 User")]
+    subgraph Browser["🌐 瀏覽器環境"]
+        User[("👤 使用者")]
     end
 
-    subgraph Extension["🔌 Chrome Extension"]
-        Popup["🖼️ Popup UI<br/>(popup.js)<br/>• Search interface<br/>• Results display<br/>• Accuracy scoring"]
-        ContentScript["📜 Content Script<br/>(content-script-browser.js)<br/>• Element picker<br/>• Event handling<br/>• Data bridging"]
-        PageScript["📄 Page Script<br/>(page-script.js)<br/>• Global variable access<br/>• Data sanitization<br/>• postMessage sender"]
+    subgraph Extension["🔌 Chrome 擴充功能"]
+        Popup["🖼️ Popup UI<br/>(popup.js)<br/>• 搜尋介面<br/>• 結果顯示<br/>• 準確度評分"]
+        ContentScript["📜 Content Script<br/>(content-script-browser.js)<br/>• 元素選取器<br/>• 事件處理<br/>• 資料橋接"]
+        PageScript["📄 Page Script<br/>(page-script.js)<br/>• 全域變數存取<br/>• 資料清理<br/>• postMessage 發送者"]
     end
 
-    subgraph Website["🌍 KKday Website"]
-        DOM["📝 DOM Elements<br/>• Clickable elements<br/>• Text content<br/>• Visual feedback"]
-        GlobalVars["🔍 Global Variables<br/>• __NUXT__.state<br/>• __NEXT_DATA__<br/>• __INIT_STATE__<br/>• window.i18n"]
+    subgraph Website["🌍 KKday 網站"]
+        DOM["📝 DOM 元素<br/>• 可點擊元素<br/>• 文字內容<br/>• 視覺回饋"]
+        GlobalVars["🔍 全域變數<br/>• __NUXT__.state<br/>• __NEXT_DATA__<br/>• __INIT_STATE__<br/>• window.i18n"]
     end
 
-    subgraph Processing["⚙️ Data Processing"]
-        Extract["📦 Extract & Flatten<br/>• Nested objects<br/>• Array handling<br/>• Key-value pairs"]
-        Search["🔎 Fuse.js Fuzzy Search<br/>• Threshold: 0.3<br/>• Val weight: 0.7<br/>• Key weight: 0.3"]
+    subgraph Processing["⚙️ 資料處理"]
+        Extract["📦 提取與扁平化<br/>• 巢狀物件<br/>• 陣列處理<br/>• 鍵值對"]
+        Search["🔎 Fuse.js 模糊搜尋<br/>• Threshold: 0.3<br/>• Val weight: 0.7<br/>• Key weight: 0.3"]
     end
 
-    %% Main Flow
-    User -->|"1. Open Extension"| Popup
-    Popup -->|"2. Request translations"| ContentScript
-    ContentScript -->|"3. Inject into page"| PageScript
-    PageScript -->|"4. Access globals"| GlobalVars
-    GlobalVars -->|"5. Extract data"| Extract
-    Extract -->|"6. Sanitize & send"| PageScript
+    %% 主要流程
+    User -->|"1. 開啟擴充功能"| Popup
+    Popup -->|"2. 請求翻譯資料"| ContentScript
+    ContentScript -->|"3. 注入到頁面"| PageScript
+    PageScript -->|"4. 存取全域變數"| GlobalVars
+    GlobalVars -->|"5. 提取資料"| Extract
+    Extract -->|"6. 清理並發送"| PageScript
     PageScript -->|"7. postMessage"| ContentScript
-    ContentScript -->|"8. Flatten & store"| Extract
-    Extract -->|"9. Send to popup"| Popup
+    ContentScript -->|"8. 扁平化並儲存"| Extract
+    Extract -->|"9. 發送到 popup"| Popup
 
-    %% Search Flow
-    User -->|"10a. Type query"| Popup
-    Popup -->|"11a. Search with scoring"| Search
-    Search -->|"12a. Ranked results"| Popup
-    Popup -->|"13a. Display with badges"| User
+    %% 搜尋流程
+    User -->|"10. 輸入搜尋"| Popup
+    Popup -->|"11. 執行搜尋"| Search
+    Search -->|"12. 回傳結果"| Popup
+    Popup -->|"13. 顯示結果"| User
 
-    %% Picker Flow
-    User -.->|"10b. Click picker button"| Popup
-    Popup -.->|"11b. Activate & close popup"| ContentScript
-    ContentScript -.->|"12b. Show notification"| User
-    User -.->|"13b. Click element"| DOM
-    DOM -.->|"14b. Get text content"| ContentScript
-    ContentScript -.->|"15b. Match & score"| Search
-    Search -.->|"16b. Best match"| ContentScript
-    ContentScript -.->|"17b. Copy & notify"| User
+    %% 元素選取流程
+    User -->|"14. 啟動選取器"| Popup
+    Popup -->|"15. 切換模式"| ContentScript
+    ContentScript -->|"16. 添加監聽器"| DOM
+    User -->|"17. 點擊元素"| DOM
+    DOM -->|"18. 提取文字"| ContentScript
+    ContentScript -->|"19. 搜尋翻譯"| Search
+    Search -->|"20. 顯示通知"| User
 
-    %% ESC to exit picker
-    User -.->|"ESC key"| ContentScript
-    ContentScript -.->|"Exit picker"| User
+    %% 右鍵選單流程
+    User -->|"21. 選取文字 + 右鍵"| DOM
+    DOM -->|"22. 觸發右鍵選單"| ContentScript
+    ContentScript -->|"23. 搜尋文字"| Search
+    Search -->|"24. 顯示結果"| User
 
-    style Popup fill:#10b981,stroke:#059669,color:#fff,stroke-width:3px
-    style ContentScript fill:#f59e0b,stroke:#d97706,color:#fff,stroke-width:3px
-    style PageScript fill:#8b5cf6,stroke:#7c3aed,color:#fff,stroke-width:3px
-    style DOM fill:#3b82f6,stroke:#2563eb,color:#fff,stroke-width:3px
-    style GlobalVars fill:#ef4444,stroke:#dc2626,color:#fff,stroke-width:3px
-    style Extract fill:#06b6d4,stroke:#0891b2,color:#fff,stroke-width:3px
-    style Search fill:#ec4899,stroke:#db2777,color:#fff,stroke-width:3px
+    style User fill:#e3f2fd
+    style Popup fill:#fff9c4
+    style ContentScript fill:#c8e6c9
+    style PageScript fill:#ffccbc
+    style Search fill:#f8bbd0
+    style Extract fill:#d1c4e9
 ```
 
-### Component Details
+### 核心元件
 
-#### 1. **Popup UI** (`popup.js`)
+#### 1. **Popup UI** (`popup.js`, `popup.html`, `popup.css`)
 
-- Provides the modern, responsive user interface
-- Handles search input with debouncing for performance
-- Displays results with color-coded accuracy badges
-- Manages fuzzy search with inline scoring algorithm
-- Implements one-click copy to clipboard
-- Shows loading states and error handling
+- 主要使用者介面，顯示搜尋框和結果
+- 使用 Fuse.js 實作模糊搜尋
+- 即時搜尋結果更新（帶防抖動）
+- 彩色準確度標籤（綠色/橙色/藍色）
+- 一鍵複製翻譯鍵值到剪貼簿
+- 狀態指示器顯示連線狀態
 
 #### 2. **Content Script** (`content-script-browser.js`)
 
-- Runs in isolated context within web pages
-- Injects page script to access page context variables
-- Implements interactive element picker with:
-  - Hover highlighting with visual feedback
-  - Click-to-select functionality
-  - ESC key to exit
-  - Smart on-page notifications with dynamic positioning
-- Bridges communication between page script and popup
-- Flattens nested translation data structures
-- Calculates match accuracy scores (exact: 100%, partial: 40-80%)
+- 在 KKday 頁面上執行的隔離腳本
+- 注入 page script 以存取頁面全域變數
+- 接收並處理來自 page script 的資料
+- 扁平化巢狀翻譯物件為 `{key, val}` 對
+- 管理元素選取模式
+- 處理使用者互動（懸停、點擊、鍵盤）
+- 顯示頁面上的通知
 
 #### 3. **Page Script** (`page-script.js`)
 
-- Injected directly into page context (bypasses isolation)
-- Accesses global variables: `__NUXT__`, `__NEXT_DATA__`, `__INIT_STATE__`
-- Implements deep data sanitization to handle:
-  - Circular references
-  - Non-serializable objects (DOM nodes, functions, Window)
-  - Nested structures with depth limiting
-- Sends cleaned data via `window.postMessage`
-- Retries extraction after delay for dynamic content
+- 在頁面上下文中執行以存取全域變數
+- 從多個來源搜尋翻譯資料
+- 深度清理物件以移除不可序列化的內容
+- 透過 `window.postMessage` 傳送清理後的資料
+- 延遲後重試提取以處理動態內容
 
 #### 4. **Service Worker** (`service-worker-browser.js`)
 
-- Background script managing extension lifecycle
-- Handles installation and updates
-- Manages persistent state across sessions
-- Routes messages between components
+- 管理擴充功能生命週期的背景腳本
+- 處理安裝和更新
+- 管理跨工作階段的持久狀態
+- 在元件之間路由訊息
+- 建立並處理右鍵選單
 
-### Data Extraction Process
+### 資料提取流程
 
-1. **Initial Load**: When visiting a KKday page, the content script automatically initializes
-2. **Script Injection**: Content script injects `page-script.js` into the page context
-3. **Data Discovery**: Page script searches for translation data in multiple sources:
-   - `__NUXT__.state` (Vue/Nuxt applications)
-   - `__NEXT_DATA__.props.pageProps` (Next.js applications)
-   - `__INIT_STATE__.lang` (Legacy applications)
-   - Window properties matching i18n patterns
-4. **Data Sanitization**: Deep cleaning to remove non-serializable objects:
-   - Filters out functions, DOM nodes, Window objects
-   - Handles circular references
-   - Limits recursion depth to prevent infinite loops
-5. **Data Transfer**: Cleaned data sent to content script via `window.postMessage`
-6. **Data Processing**: Content script flattens nested objects into `{key, val}` pairs
-7. **Delayed Retry**: After 2 seconds, attempts extraction again for dynamic content
-8. **User Interaction**: When popup opens, requests processed data from content script
-9. **Fuzzy Search**: Popup uses Fuse.js for intelligent fuzzy matching:
-   - Threshold: 0.3 (controls match sensitivity)
-   - Translation text (val) weighted at 0.7 (primary search target)
-   - Key weighted at 0.3 (secondary search target)
-   - Scores inverted for display (1.0 = perfect match)
-10. **Display Results**: Shows ranked results with color-coded accuracy badges
+1. **初始載入**：訪問 KKday 頁面時，content script 自動初始化
+2. **腳本注入**：Content script 將 `page-script.js` 注入頁面上下文
+3. **資料探索**：Page script 從多個來源搜尋翻譯資料：
+   - `__NUXT__.state`（Vue/Nuxt 應用程式）
+   - `__NEXT_DATA__.props.pageProps`（Next.js 應用程式）
+   - `__INIT_STATE__.lang`（舊版應用程式）
+   - 符合 i18n 模式的 Window 屬性
+4. **資料清理**：深度清理以移除不可序列化的物件：
+   - 過濾函式、DOM 節點、Window 物件
+   - 處理循環參考
+   - 限制遞迴深度以防止無限迴圈
+5. **資料傳輸**：清理後的資料透過 `window.postMessage` 傳送給 content script
+6. **資料處理**：Content script 將巢狀物件扁平化為 `{key, val}` 對
+7. **延遲重試**：2 秒後再次嘗試提取動態內容
+8. **使用者互動**：當 popup 開啟時，向 content script 請求處理後的資料
+9. **模糊搜尋**：Popup 使用 Fuse.js 進行智能模糊匹配：
+   - Threshold: 0.3（控制匹配靈敏度）
+   - 翻譯文字（val）權重 0.7（主要搜尋目標）
+   - 鍵值（key）權重 0.3（次要搜尋目標）
+   - 分數倒轉以供顯示（1.0 = 完美匹配）
+10. **顯示結果**：顯示帶有彩色準確度標籤的排序結果
 
-### Element Picker Workflow
+### 元素選取工作流程
 
-1. **Activation**: User clicks "選取頁面元素" button
-2. **Popup Closes**: Popup window closes to avoid focus issues
-3. **Notification Shows**: Prominent on-page notification appears
-4. **Mouse Tracking**: Notification repositions to stay away from cursor (6 positions)
-5. **Hover Feedback**: Elements highlight on mouseover with blue outline
-6. **Click Handler**: On click, extracts element's text content
-7. **Text Matching**: Searches translation data for best match with scoring
-8. **Auto Copy**: If found, automatically copies key to clipboard
-9. **Result Notification**: Shows success/failure with accuracy badge
-10. **ESC Exit**: Press ESC anytime to deactivate picker mode
+1. **啟動**：使用者點選「選取頁面元素」按鈕
+2. **Popup 關閉**：Popup 視窗關閉以避免焦點問題
+3. **顯示通知**：在頁面上顯示明顯的通知
+4. **滑鼠追蹤**：通知會重新定位以遠離游標（6 個位置）
+5. **懸停回饋**：元素在滑鼠懸停時以藍色外框突顯
+6. **點擊處理**：點擊時提取元素的文字內容
+7. **文字匹配**：在翻譯資料中搜尋最佳匹配並評分
+8. **自動複製**：如果找到，自動複製鍵值到剪貼簿
+9. **結果通知**：顯示成功/失敗及準確度標籤
+10. **ESC 退出**：隨時按 ESC 鍵停用選取模式
 
-## Development
+## 開發
 
-### Project Structure
+### 專案結構
 
 ```
 kkday-lang-key-finder/
 ├── src/
-│   ├── popup/           # Popup UI components
-│   ├── content/          # Content and page scripts
+│   ├── popup/           # Popup UI 元件
+│   ├── content/          # Content 和 page 腳本
 │   ├── background/       # Service worker
-│   ├── lib/             # Third-party libraries (fuse.min.js)
-│   └── models/           # Data models (unused in production)
+│   ├── lib/             # 第三方函式庫（fuse.min.js）
+│   └── models/           # 資料模型（生產環境未使用）
 ├── tests/
-│   ├── unit/            # Unit tests
-│   ├── integration/     # Integration tests
-│   └── browser/         # Browser compatibility tests
-├── icons/               # Extension icons
-└── manifest.json        # Extension manifest
+│   ├── unit/            # 單元測試
+│   ├── integration/     # 整合測試
+│   └── browser/         # 瀏覽器相容性測試
+├── icons/               # 擴充功能圖示
+└── manifest.json        # 擴充功能 manifest
 ```
 
-### Testing
+### 測試
 
 ```bash
-# Run all tests
+# 執行所有測試
 npm test
 
-# Run specific test suite
+# 執行特定測試套件
 npm test tests/browser/test_browser_compatibility.js
 
-# Run with coverage
+# 執行覆蓋率測試
 npm run test:coverage
 ```
 
@@ -264,184 +259,122 @@ npm run lint
 npm run lint:fix
 ```
 
-### Releasing a New Version
+### 發布新版本
 
-**For maintainers only:**
+**僅限維護者：**
 
 ```bash
-# Bug fix release (1.0.0 → 1.0.1)
+# Bug 修復版本（1.0.0 → 1.0.1）
 npm run release:patch
 
-# New feature release (1.0.0 → 1.1.0)
+# 新功能版本（1.0.0 → 1.1.0）
 npm run release:minor
 
-# Breaking change release (1.0.0 → 2.0.0)
+# 重大更新版本（1.0.0 → 2.0.0）
 npm run release:major
 ```
 
-This will automatically:
-1. ✅ Update version in package.json and manifest.json
-2. ✅ Create git commit and tag
-3. ✅ Push to GitHub
-4. ✅ Trigger GitHub Actions to build and create release
-5. ✅ Generate downloadable zip file for Chrome Web Store
+這會自動：
+1. ✅ 更新 package.json 和 manifest.json 中的版本
+2. ✅ 建立 git commit 和 tag
+3. ✅ 推送到 GitHub
+4. ✅ 觸發 GitHub Actions 建置並建立 release
+5. ✅ 產生可下載的 zip 檔案供上傳到 Chrome Web Store
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed release workflow.
+詳細的發布流程請參閱 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
-## Troubleshooting
+## 疑難排解
 
-### Extension not loading translation data
+### 擴充功能無法載入翻譯資料
 
-1. **Verify domain**: Ensure you're on a KKday domain (`*.kkday.com`)
-2. **Check status**: Look at the status indicator in the popup header
-3. **Refresh page**: Try a hard refresh (Ctrl+F5 or Cmd+Shift+R)
-4. **Wait for load**: Some pages load data asynchronously - wait a few seconds
-5. **Check browser console**: Open DevTools to see any error messages
+1. **驗證網域**：確保您在 KKday 網域（`*.kkday.com`）上
+2. **檢查狀態**：查看 popup 標題列的狀態指示器
+3. **重新整理頁面**：嘗試強制重新整理（Ctrl+F5 或 Cmd+Shift+R）
+4. **等待載入**：某些頁面會非同步載入資料 - 請等待幾秒鐘
+5. **檢查瀏覽器控制台**：開啟 DevTools 查看是否有錯誤訊息
 
-### Element picker not working
+### 元素選取器無法運作
 
-1. **Domain check**: Ensure you're on a KKday website
-2. **Activate picker**: Click "選取頁面元素" button - popup will close
-3. **Look for notification**: You should see an on-page notification
-4. **Hover elements**: Elements should highlight with blue outline
-5. **ESC to exit**: Press ESC if picker seems stuck
-6. **Reload extension**: Try disabling and re-enabling the extension
+1. **網域檢查**：確保您在 KKday 網站上
+2. **啟動選取器**：點選「選取頁面元素」按鈕 - popup 會關閉
+3. **尋找通知**：您應該會看到頁面上的通知
+4. **懸停元素**：元素應該會以藍色外框突顯
+5. **ESC 退出**：如果選取器似乎卡住，請按 ESC
+6. **重新載入擴充功能**：嘗試停用並重新啟用擴充功能
 
-### Search results showing low accuracy
+### 搜尋結果顯示低準確度
 
-1. **Refine search**: Try using more specific or shorter search terms
-2. **Check exact text**: Copy the exact text from the page
-3. **Language mismatch**: Ensure you're searching in the correct language
-4. **Partial matches**: Low scores might still be correct for partial matches
+1. **精煉搜尋**：嘗試使用更具體或更短的搜尋詞
+2. **檢查精確文字**：從頁面複製精確的文字
+3. **語言不匹配**：確保您在正確的語言中搜尋
+4. **資料不完整**：某些翻譯可能未載入或不可用
 
-### Copy to clipboard not working
+### 右鍵選單搜尋沒有反應
 
-1. **Browser permissions**: Ensure clipboard permissions are granted
-2. **HTTPS required**: Clipboard API requires secure context
-3. **Manual copy**: Select and copy the key manually if auto-copy fails
+1. **檢查網域**：僅在 `*.kkday.com` 網域上運作
+2. **重新整理頁面**：嘗試重新整理頁面以重新注入 content script
+3. **檢查選取範圍**：確保您已選取文字後再按右鍵
+4. **查看通知**：結果應該會在頁面上顯示為通知
+5. **檢查權限**：確保擴充功能有必要的權限
 
-## Browser Compatibility
+## 權限說明
 
-- Chrome/Chromium 88+
-- Edge 88+
-- Brave 1.18+
+此擴充功能需要以下權限：
 
-## Security & Permissions
+- **activeTab**：讀取當前分頁的 URL 並檢查是否在 KKday 網域
+- **clipboardWrite**：將翻譯鍵值複製到剪貼簿
+- **storage**：儲存使用者偏好設定和擴充功能狀態
+- **notifications**：顯示搜尋結果和錯誤訊息
+- **tabs**：與分頁通訊以請求翻譯資料
+- **contextMenus**：提供右鍵選單快速搜尋功能
+- **scripting**：動態注入 content script（當擴充功能重新載入時）
+- **host_permissions (`*://*.kkday.com/*`)**：僅在 KKday 網域上存取和提取翻譯資料
 
-The extension requires the following permissions:
+**隱私聲明**：此擴充功能不會收集、傳輸或儲存任何使用者個人資料。所有資料處理均在本機完成。
 
-### Required Permissions
+## 瀏覽器相容性
 
-#### `activeTab`
-**Purpose**: Access the currently active tab to enable element picker and data extraction features.
+- ✅ Chrome 109+（推薦）
+- ✅ Edge 109+
+- ✅ 其他基於 Chromium 的瀏覽器
 
-**Usage in code**:
-- `popup.js:97` - Query active tab information to determine current page URL and domain
-- Enables element picker to interact with page elements
-- Required for extracting translation data from the current page context
+需要 Manifest V3 支援。
 
-**Justification**: This permission is essential for the core functionality of finding i18n translation keys on the current page. It only accesses the active tab when the user explicitly opens the popup or activates the element picker.
+## 技術細節
 
----
+- **Manifest Version**: V3
+- **JavaScript**: ES2022
+- **模糊搜尋引擎**: Fuse.js v7.0.0
+- **無建置工具**：純瀏覽器原生 JavaScript，無需 webpack 或 bundler
+- **測試框架**: Jest
+- **程式碼品質**: ESLint + Prettier
 
-#### `clipboardWrite`
-**Purpose**: Copy translation keys to the user's clipboard for easy pasting into code.
+## 貢獻
 
-**Usage in code**:
-- `popup.js:551` - Copy selected translation key when user clicks copy button
-- `content-script-browser.js:733` - Auto-copy key when user selects element via picker
-- `service-worker-browser.js:100-194` - Handle clipboard operations via service worker
+歡迎貢獻！請閱讀我們的 [貢獻指南](./CONTRIBUTING.md) 了解詳細資訊：
 
-**Justification**: This is a core feature that saves developers significant time. When a user finds a translation key (either through search or element picker), they can copy it with one click instead of manually selecting and copying text.
+- Git 分支策略
+- Commit 訊息規範
+- Pull Request 流程
+- 版本發布流程
 
----
+## 授權條款
 
-#### `storage`
-**Purpose**: Save user preferences and extension settings across browser sessions.
+MIT License - 詳見 [LICENSE](./LICENSE) 檔案
 
-**Usage in code**:
-- `service-worker-browser.js:60` - Store default settings on first install
-- `service-worker-browser.js:269, 296` - Read user settings and usage statistics
-- `service-worker-browser.js:285, 312` - Update settings and statistics
+## 作者
 
-**Justification**: Allows the extension to remember user preferences like search threshold, maximum results, and notification settings. This improves user experience by maintaining consistent behavior across sessions.
+KKday Development Team
 
----
+## 支援
 
-#### `notifications`
-**Purpose**: Display system notifications to provide user feedback when element picker finds or fails to find a translation key.
+如有問題或需要協助：
 
-**Usage in code**:
-- `service-worker-browser.js:254` - Show success notification when element is selected and key is found
-- `service-worker-browser.js:361` - Show error notification when search fails or user is not on KKday website
-
-**Justification**: Provides immediate visual feedback to users when using the element picker feature, especially since the popup closes during element selection. Without notifications, users would not know if their action succeeded or failed.
-
----
-
-#### `tabs`
-**Purpose**: Query and monitor tab information to detect KKday websites and manage content script injection.
-
-**Usage in code**:
-- `popup.js:97` - Query current active tab to check domain and URL
-- `popup.js:281, 691` - Inject scripts and send messages to content script
-- `service-worker-browser.js:169` - Query tabs for clipboard operations
-- `service-worker-browser.js:202` - Listen to tab updates (`chrome.tabs.onUpdated`) to auto-inject content scripts
-- `service-worker-browser.js:351` - Send messages to tabs for context menu search
-
-**Justification**: Essential for verifying that the extension is running on a KKday domain (*.kkday.com) and for managing communication between the popup, content script, and service worker. The `onUpdated` listener ensures content scripts are ready when users navigate between pages.
+1. 查看 [疑難排解](#疑難排解) 章節
+2. 閱讀 [QUICKSTART.md](./QUICKSTART.md) 快速入門指南
+3. 查看 [GitHub Issues](https://github.com/b12031106/kkday-lang-key-finder/issues)
+4. 建立新的 issue 回報問題
 
 ---
 
-#### `contextMenus`
-**Purpose**: Add right-click context menu option to search for i18n keys from selected text.
-
-**Usage in code**:
-- `service-worker-browser.js:330` - Create context menu item "Search I18n Key for '%s'"
-- `service-worker-browser.js:338` - Handle context menu click events
-- `service-worker-browser.js:348` - Process context menu search requests
-
-**Justification**: Provides an additional convenient way for users to search for translation keys. Users can select any text on the page, right-click, and immediately search for its translation key without opening the popup first.
-
----
-
-#### `scripting`
-**Purpose**: Dynamically inject content scripts into KKday web pages to extract translation data.
-
-**Usage in code**:
-- `popup.js:281` - Inject content script using `chrome.scripting.executeScript` when content script is not already loaded
-- `service-worker-browser.js:171` - Execute inline script for clipboard operations as fallback method
-
-**Justification**: Required for the extension's primary function of extracting translation data from KKday pages. The content script needs to be injected to access page context and extract i18n data from global variables like `__NUXT__`, `__NEXT_DATA__`, etc. Dynamic injection is necessary because pages may load at different times or be dynamically navigated.
-
----
-
-#### `host_permissions: "*://*.kkday.com/*"`
-**Purpose**: Grant permission to run content scripts on all KKday domains.
-
-**Usage in code**:
-- Enables content scripts to run on all KKday subdomains (www.kkday.com, zh-tw.kkday.com, etc.)
-- Allows extraction of translation data from page context
-- Required for element picker to access and highlight page elements
-
-**Justification**: The extension is specifically designed for KKday websites and needs to access translation data stored in the page's JavaScript context. This permission is limited to `*.kkday.com` domains only and does not request access to any other websites.
-
-### Privacy & Data Handling
-
-- **No data collection**: The extension does not collect or transmit any user data
-- **Local processing**: All data extraction and search happens locally in the browser
-- **No external requests**: Extension does not make any network requests
-- **Page context only**: Only accesses data already present in the page's JavaScript context
-- **Temporary storage**: Translation data is only stored in memory during active session
-
-## Contributing
-
-Please read our contributing guidelines before submitting PRs.
-
-## License
-
-MIT License - See LICENSE file for details
-
-## Support
-
-For issues or questions, please file an issue on GitHub.
+使用愉快！🎉
