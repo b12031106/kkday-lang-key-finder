@@ -264,6 +264,30 @@ npm run lint
 npm run lint:fix
 ```
 
+### Releasing a New Version
+
+**For maintainers only:**
+
+```bash
+# Bug fix release (1.0.0 → 1.0.1)
+npm run release:patch
+
+# New feature release (1.0.0 → 1.1.0)
+npm run release:minor
+
+# Breaking change release (1.0.0 → 2.0.0)
+npm run release:major
+```
+
+This will automatically:
+1. ✅ Update version in package.json and manifest.json
+2. ✅ Create git commit and tag
+3. ✅ Push to GitHub
+4. ✅ Trigger GitHub Actions to build and create release
+5. ✅ Generate downloadable zip file for Chrome Web Store
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed release workflow.
+
 ## Troubleshooting
 
 ### Extension not loading translation data

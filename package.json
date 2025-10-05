@@ -11,7 +11,11 @@
     "format": "prettier --write src/ tests/",
     "build": "npm run lint && npm run test",
     "dev": "npm run lint:fix && npm run format",
-    "package": "zip -r kkday-lang-key-finder.zip manifest.json icons/*.png src/popup src/content src/background src/lib -x '*.DS_Store' -x '*/.DS_Store'"
+    "package": "zip -r kkday-lang-key-finder.zip manifest.json icons/*.png src/popup src/content src/background src/lib -x '*.DS_Store' -x '*/.DS_Store'",
+    "version": "node scripts/sync-version.js && git add manifest.json",
+    "release:patch": "npm version patch && git push && git push --tags",
+    "release:minor": "npm version minor && git push && git push --tags",
+    "release:major": "npm version major && git push && git push --tags"
   },
   "dependencies": {
     "fuse.js": "^7.0.0"

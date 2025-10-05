@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create release package
+        run: npm run package
+
+      - name: Rename zip file with version
+        run: mv kkday-lang-key-finder.zip kkday-lang-key-finder-v${{ steps.get_version.outputs.VERSION }}.zip
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          PREV_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) 2>/dev/null || echo "")
+          if [ -z "$PREV_TAG" ]; then
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges)
+          else
+            CHANGELOG=$(git log ${PREV_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          fi
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: kkday-lang-key-finder-v${{ steps.get_version.outputs.VERSION }}.zip
+          body: |
+            ## 📦 Release v${{ steps.get_version.outputs.VERSION }}
+
+            ### 🔄 Changes
+            ${{ steps.changelog.outputs.CHANGELOG }}
+
+            ### 📥 安裝方式
+            1. 下載 `kkday-lang-key-finder-v${{ steps.get_version.outputs.VERSION }}.zip`
+            2. 解壓縮後上傳到 Chrome Web Store Dashboard
+
+            ### 🚀 或從原始碼安裝
+            ```bash
+            git clone https://github.com/b12031106/kkday-lang-key-finder.git
+            cd kkday-lang-key-finder
+            git checkout v${{ steps.get_version.outputs.VERSION }}
+            # 在 chrome://extensions/ 載入未封裝項目
+            ```
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
