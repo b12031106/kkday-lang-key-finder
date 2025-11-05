@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "KKday Lang Key Finder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Find i18n translation keys for text on KKday websites with fuzzy search and element picker",
   "author": "KKday Development Team",
   "homepage_url": "https://github.com/b12031106/kkday-lang-key-finder",
@@ -14,11 +14,17 @@
     "contextMenus",
     "scripting"
   ],
-  "host_permissions": ["*://*.kkday.com/*"],
+  "host_permissions": [
+    "*://*.kkday.com/*"
+  ],
   "content_scripts": [
     {
-      "matches": ["*://*.kkday.com/*"],
-      "js": ["src/content/content-script-browser.js"],
+      "matches": [
+        "*://*.kkday.com/*"
+      ],
+      "js": [
+        "src/content/content-script-browser.js"
+      ],
       "run_at": "document_end",
       "all_frames": false
     }
@@ -44,8 +50,13 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["icons/*.png", "src/content/page-script.js"],
-      "matches": ["*://*.kkday.com/*"]
+      "resources": [
+        "icons/*.png",
+        "src/content/page-script.js"
+      ],
+      "matches": [
+        "*://*.kkday.com/*"
+      ]
     }
   ]
 }
