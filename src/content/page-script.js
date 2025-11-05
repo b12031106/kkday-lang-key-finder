@@ -97,7 +97,8 @@
   }
 
   // 深度複製並清理物件，移除不可序列化的屬性
-  function sanitizeData(obj, maxDepth = 10, currentDepth = 0) {
+  // 使用 WeakSet 追蹤已訪問的物件以避免循環引用
+  function sanitizeData(obj, maxDepth = 10, currentDepth = 0, seen = new WeakSet()) {
     if (currentDepth > maxDepth) {
       return null;
     }
@@ -110,8 +111,16 @@
       return obj;
     }
 
+    // 檢測循環引用：如果物件已經被訪問過，直接返回 null 避免無限遞迴
+    if (seen.has(obj)) {
+      return null;
+    }
+
+    // 將當前物件加入已訪問集合
+    seen.add(obj);
+
     if (Array.isArray(obj)) {
-      return obj.map(item => sanitizeData(item, maxDepth, currentDepth + 1)).filter(item => item !== null);
+      return obj.map(item => sanitizeData(item, maxDepth, currentDepth + 1, seen)).filter(item => item !== null);
     }
 
     // 建立新物件，只包含可序列化的屬性
@@ -136,7 +145,7 @@
 
         // 遞迴處理物件和陣列
         if (typeof value === 'object' && value !== null) {
-          const sanitized = sanitizeData(value, maxDepth, currentDepth + 1);
+          const sanitized = sanitizeData(value, maxDepth, currentDepth + 1, seen);
           if (sanitized !== null) {
             cleaned[key] = sanitized;
           }
