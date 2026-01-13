@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "KKday Lang Key Finder",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Find i18n translation keys for text on KKday websites with fuzzy search and element picker",
   "author": "KKday Development Team",
   "homepage_url": "https://github.com/b12031106/kkday-lang-key-finder",
