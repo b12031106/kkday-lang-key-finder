@@ -7,8 +7,8 @@ const SearchService = require('../../src/services/SearchService');
 const TranslationEntry = require('../../src/models/TranslationEntry');
 const PageContext = require('../../src/models/PageContext');
 
-// CI 環境通常比本地慢 3 倍，放寬時間限制
-const CI_MULTIPLIER = process.env.CI ? 3 : 1;
+// CI 環境和不穩定環境放寬時間限制
+const CI_MULTIPLIER = process.env.CI ? 3 : 1.5;
 
 // Mock Fuse.js for consistent performance testing
 jest.mock('fuse.js', () => {

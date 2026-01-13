@@ -16,13 +16,26 @@
         // 列出所有的 state keys
         const stateKeys = Object.keys(__NUXT__.state);
 
-        // 尋找可能的翻譯資料
+        // 優先尋找動態語系 key: $si18n_{locale} 格式 (例如 $si18n_en-us, $si18n_zh-tw)
         for (const key of stateKeys) {
-          if (key.includes('i18n') || key.includes('lang') || key.includes('locale') || key.startsWith('$s')) {
+          if (key.startsWith('$si18n_')) {
             const value = __NUXT__.state[key];
             if (value && typeof value === 'object' && Object.keys(value).length > 0) {
               data = value;
               break;
+            }
+          }
+        }
+
+        // 若找不到動態語系 key，再嘗試其他可能的翻譯資料格式
+        if (!data) {
+          for (const key of stateKeys) {
+            if (key.includes('i18n') || key.includes('lang') || key.includes('locale')) {
+              const value = __NUXT__.state[key];
+              if (value && typeof value === 'object' && Object.keys(value).length > 0) {
+                data = value;
+                break;
+              }
             }
           }
         }
